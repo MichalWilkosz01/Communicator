@@ -1,12 +1,16 @@
 ﻿using Communicator.Data;
 using Communicator.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Communicator.Controllers
 {
     public class OverviewController : Controller
     {
         private readonly ApplicationDbContext _context;
+        
         public OverviewController(ApplicationDbContext context)
         {
             _context = context;
@@ -19,39 +23,26 @@ namespace Communicator.Controllers
             List<ApplicationUser> users = _context.Users.Where(x => x.Name.Contains(searchingText) || x.LastName.Contains(searchingText) || x.Nick.Contains(searchingText)).ToList();
             overviewPageViewModel.Users = users;
 
+            TempData["SearchResults"] = JsonConvert.SerializeObject(users);
+
             return View("Index", overviewPageViewModel);
-        }
-
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            OverviewPageViewModel overviewPageViewModel = new OverviewPageViewModel();
-
-            // Tutaj możesz zainicjować model lub przeprowadzić inne operacje, które są potrzebne
-
-            return View(overviewPageViewModel); // Przekazujemy model widoku do widoku
         }
 
 
         [HttpPost]
         [ActionName("AddFriend")]
-        [ValidateAntiForgeryToken]
 
         public IActionResult AddFriend(string userId)
         {
-            if (string.IsNullOrEmpty(userId))
-            {
-                // Obsłuż błąd braku userId
-                return RedirectToAction("Search"); // Przekieruj na widok Index
-            }
+            var usersJson = TempData["SearchResults"] as string;
 
-            // Tutaj dodaj kod do logiki dodawania użytkownika o podanym userId do listy przyjaciół zalogowanego użytkownika.
-            // Możesz użyć _context, aby uzyskać dostęp do bazy danych.
+            var users = JsonConvert.DeserializeObject<List<ApplicationUser>>(usersJson);
+            var overviewPageViewModel = new OverviewPageViewModel();
+            overviewPageViewModel.Users = users;
+            TempData["SearchResults"] = JsonConvert.SerializeObject(users);
 
-            // Przykład przekierowania na stronę Index po pomyślnym dodaniu przyjaciela:
+            return View("Index", overviewPageViewModel);
             
-            return RedirectToAction("Search");
         }
 
     }
