@@ -11,5 +11,6 @@ namespace Communicator.Models
         [Required]
         public string Content { get; set; }
         [Required]
+        public DateTime SendingTime { get; set; } = DateTime.Now;
     }
 }

@@ -18,6 +18,6 @@ namespace Communicator.Models
         [Required]
         public string Country { get; set; }
        
-        public ICollection<ApplicationUser>? Friends { get; set; }
+        //public ICollection<ApplicationUser>? Friends { get; set; }
     }
 }

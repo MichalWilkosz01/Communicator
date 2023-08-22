@@ -7,16 +7,12 @@ namespace Communicator.Models
     public class Correspondence
     {
         [Required]
-        public int Id { get; set; }
-        public DateTime SendingTime { get; set; } = DateTime.Now;
-        [Required]
-        public int SenderId { get; set; }
-        [ForeignKey("SenderId")]
-        [ValidateNever]
-        public ApplicationUser Sender { get; set; }
-        public int ReceiverId { get; set; }
-        [ForeignKey("ReceiverId")]
-        [ValidateNever]
-        public ApplicationUser Receiver { get; set; }
+        public int Id { get; set; }      
+        public string SenderId { get; set; }
+        public ApplicationUser Sender { get; set; } = null!;
+        public string ReceiverId { get; set; } 
+        public ApplicationUser Receiver { get; set; } = null!;
+        public int MessageId { get; set; }
+        public Message Message { get; set; } = null!;
     }
 }

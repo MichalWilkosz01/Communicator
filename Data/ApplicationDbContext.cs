@@ -17,6 +17,7 @@ namespace Communicator.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
         }
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Message> Messages { get; set; }
