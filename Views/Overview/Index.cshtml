@@ -26,8 +26,22 @@
                             <td>@user.Name</td>
                             <td>@user.LastName</td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-sm">Add Friend</button>
-                                <button type="button" class="btn btn-success btn-sm">Write a Message</button>
+                                @*@if (ViewData["FriendAdded"] != null && (bool)ViewData["FriendAdded"])
+                                {
+                                    <button type="button" class="btn btn-success btn-sm">Added</button>
+                                }
+                                else
+                                {
+                                    <a asp-action="AddFriend">
+                                        <input type="hidden" name="userId" value="@user.Id" />
+                                        <button type="submit" class="btn btn-primary btn-sm">Add Friend</button>
+                                    </a>
+                                }*@
+                                <form method="post" asp-controller="Overview" asp-action="AddFriend" >
+                                    <input type="hidden" name="userId" value="@user.Id" />
+                                    <button type="submit" class="btn btn-primary btn-sm">Add Friend</button>
+                                    <button type="button" class="btn btn-success btn-sm">Write a Message</button>
+                                </form>    
                             </td>
                         </tr>
                     }
