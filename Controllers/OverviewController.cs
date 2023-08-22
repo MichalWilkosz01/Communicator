@@ -11,8 +11,8 @@ namespace Communicator.Controllers
         {
             _context = context;
         }
-        
 
+        [HttpGet]
         public IActionResult Search(string searchingText)
         {
             OverviewPageViewModel overviewPageViewModel = new OverviewPageViewModel();
