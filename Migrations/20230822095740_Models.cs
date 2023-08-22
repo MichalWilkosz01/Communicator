@@ -200,7 +200,7 @@ namespace Communicator.Migrations
                         column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Correspondences_Messages_MessageId",
                         column: x => x.MessageId,

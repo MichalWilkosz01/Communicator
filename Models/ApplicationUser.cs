@@ -17,7 +17,8 @@ namespace Communicator.Models
         public string City { get; set; }
         [Required]
         public string Country { get; set; }
-       
+        [Required]
+        public string PhoneNumber { get; set; }
         //public ICollection<ApplicationUser>? Friends { get; set; }
     }
 }
