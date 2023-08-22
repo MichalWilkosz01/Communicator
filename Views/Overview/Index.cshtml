@@ -1,0 +1,44 @@
+﻿@model OverviewPageViewModel
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Search Results</h1>
+
+    @if (Model.Users.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table custom-table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nick</th>
+                        <th>Name</th>
+                        <th>Last Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.Nick</td>
+                            <td>@user.Name</td>
+                            <td>@user.LastName</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm">Add Friend</button>
+                                <button type="button" class="btn btn-success btn-sm">Write a Message</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No search results found.
+        </div>
+    }
+</div>
