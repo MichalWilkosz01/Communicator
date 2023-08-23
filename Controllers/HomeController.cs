@@ -1,4 +1,5 @@
-﻿using Communicator.Models;
+﻿using Communicator.Data;
+using Communicator.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -9,11 +10,13 @@ namespace Communicator.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _logger = logger;
             _userManager = userManager;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -24,7 +27,8 @@ namespace Communicator.Controllers
             {
                 ViewData["UserName"] = $"{user.Name} {user.LastName}";
             }
-            return View();
+            var userFriends = _context.Friendships.Where(x => x.UserId == id).Select(f => f.Friend).ToList();
+            return View(userFriends);
         }
 
         public IActionResult Privacy()
