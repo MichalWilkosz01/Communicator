@@ -24,9 +24,13 @@ namespace Communicator.Controllers
         {
             var id = _userManager.GetUserId(this.User);
             OverviewPageViewModel overviewPageViewModel = new OverviewPageViewModel();
-            List<ApplicationUser> users = _context.Users.Where(x => x.Name.Contains(searchingText) || x.LastName.Contains(searchingText) || x.Nick.Contains(searchingText)).Where(u=>u.Id != id).ToList();
+            List<ApplicationUser> users = _context.Users.Where(x => x.Name.Contains(searchingText) || x.LastName.Contains(searchingText) || x.Nick.Contains(searchingText)).Where(u=>u.Id != id).ToList();          
+            var userFriendIds = _context.Friendships.Where(u => u.UserId == id).Select(f => f.FriendId).ToList();
             overviewPageViewModel.Users = users;
-
+            overviewPageViewModel.UserFriendIds = userFriendIds;
+            
+            
+           
             TempData["SearchResults"] = JsonConvert.SerializeObject(users);
 
             return View("Index", overviewPageViewModel);
@@ -41,6 +45,7 @@ namespace Communicator.Controllers
             var id = _userManager.GetUserId(this.User);
             var user = _userManager.Users.FirstOrDefault(u => u.Id == id);
             var friend = _userManager.Users.FirstOrDefault(u => u.Id == userId);
+           
             if (user != null && friend != null)
             {
                 var friendship = new Friendship
@@ -54,11 +59,12 @@ namespace Communicator.Controllers
                 _context.Add(friendship);
             }
             _context.SaveChanges();
-            ViewData["FriendAdded"] = true;
+            var userFriendIds = _context.Friendships.Where(u => u.UserId == id).Select(f => f.FriendId).ToList();
             var usersJson = TempData["SearchResults"] as string;
 
             var users = JsonConvert.DeserializeObject<List<ApplicationUser>>(usersJson);
             var overviewPageViewModel = new OverviewPageViewModel();
+            overviewPageViewModel.UserFriendIds = userFriendIds;
             overviewPageViewModel.Users = users;
             TempData["SearchResults"] = usersJson;
 

@@ -26,8 +26,10 @@
                             <td>@user.Name</td>
                             <td>@user.LastName</td>
                             <td>
-                                @if (ViewData["FriendAdded"] != null && (bool)ViewData["FriendAdded"])
+                    
+                                @if (Model.UserFriendIds.Contains(@user.Id))
                                 {
+                                    
                                     <button type="button" class="inactive-button">Added</button>
                                 }
                                 else
