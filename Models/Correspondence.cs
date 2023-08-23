@@ -15,8 +15,6 @@ namespace Communicator.Models
         [ForeignKey("ReceiverId")]
         public string ReceiverId { get; set; } 
         public ApplicationUser Receiver { get; set; } = null!;
-        [ForeignKey("MessageId")]
-        public int MessageId { get; set; }
-        public Message Message { get; set; } = null!;
+        public ICollection<Message>? Messages { get; set; } = new List<Message>();
     }
 }

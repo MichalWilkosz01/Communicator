@@ -41,14 +41,25 @@ namespace Communicator.Controllers
             var id = _userManager.GetUserId(this.User);
             var user = _userManager.Users.FirstOrDefault(u => u.Id == id);
             var friend = _userManager.Users.FirstOrDefault(u => u.Id == userId);
-            user.Friends.Add(friend);
+            if (user != null && friend != null)
+            {
+                var friendship = new Friendship
+                {
+                    User = user,
+                    UserId = user.Id,
+                    Friend = friend,
+                    FriendId = friend.Id
+
+                };
+                _context.Add(friendship);
+            }
             _context.SaveChanges();
             var usersJson = TempData["SearchResults"] as string;
 
             var users = JsonConvert.DeserializeObject<List<ApplicationUser>>(usersJson);
             var overviewPageViewModel = new OverviewPageViewModel();
             overviewPageViewModel.Users = users;
-            TempData["SearchResults"] = JsonConvert.SerializeObject(users);
+            TempData["SearchResults"] = usersJson;
 
             return View("Index", overviewPageViewModel);
             

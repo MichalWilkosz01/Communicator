@@ -19,6 +19,6 @@ namespace Communicator.Models
         public string Country { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-        public ICollection<ApplicationUser>? Friends { get; set; } = new List<ApplicationUser>();
+        
     }
 }

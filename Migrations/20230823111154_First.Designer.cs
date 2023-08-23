@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Communicator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230822223131_First")]
+    [Migration("20230823111154_First")]
     partial class First
     {
         /// <inheritdoc />
@@ -35,9 +35,6 @@ namespace Communicator.Migrations
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -106,8 +103,6 @@ namespace Communicator.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -127,9 +122,6 @@ namespace Communicator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("MessageId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ReceiverId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -140,13 +132,36 @@ namespace Communicator.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MessageId");
-
                     b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
 
                     b.ToTable("Correspondences");
+                });
+
+            modelBuilder.Entity("Communicator.Models.Friendship", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FriendId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FriendId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Friendships");
                 });
 
             modelBuilder.Entity("Communicator.Models.Message", b =>
@@ -161,10 +176,15 @@ namespace Communicator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CorrespondenceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("SendingTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CorrespondenceId");
 
                     b.ToTable("Messages");
                 });
@@ -306,21 +326,8 @@ namespace Communicator.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Communicator.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Communicator.Models.ApplicationUser", null)
-                        .WithMany("Friends")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("Communicator.Models.Correspondence", b =>
                 {
-                    b.HasOne("Communicator.Models.Message", "Message")
-                        .WithMany()
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Communicator.Models.ApplicationUser", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverId")
@@ -333,11 +340,35 @@ namespace Communicator.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Message");
-
                     b.Navigation("Receiver");
 
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Communicator.Models.Friendship", b =>
+                {
+                    b.HasOne("Communicator.Models.ApplicationUser", "Friend")
+                        .WithMany()
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Communicator.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Friend");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Communicator.Models.Message", b =>
+                {
+                    b.HasOne("Communicator.Models.Correspondence", null)
+                        .WithMany("Messages")
+                        .HasForeignKey("CorrespondenceId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -391,9 +422,9 @@ namespace Communicator.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Communicator.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Communicator.Models.Correspondence", b =>
                 {
-                    b.Navigation("Friends");
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }
