@@ -23,15 +23,13 @@ namespace Communicator.Data
             .HasForeignKey(c => c.SenderId)
             .OnDelete(DeleteBehavior.Restrict);
             builder.Entity<Friendship>()
-            .HasOne(c => c.User)
-            .WithMany()
-            .HasForeignKey(c => c.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Friendship>()
-           .HasOne(c => c.Friend)
-           .WithMany()
-           .HasForeignKey(c => c.FriendId)
-           .OnDelete(DeleteBehavior.Restrict);
+        .HasOne(friendship => friendship.User)
+        .WithMany()
+        .HasForeignKey(friendship => friendship.UserId)
+        .OnDelete(DeleteBehavior.NoAction); 
+
+         
+
         }
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Message> Messages { get; set; }

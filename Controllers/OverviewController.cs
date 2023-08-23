@@ -54,6 +54,7 @@ namespace Communicator.Controllers
                 _context.Add(friendship);
             }
             _context.SaveChanges();
+            ViewData["FriendAdded"] = true;
             var usersJson = TempData["SearchResults"] as string;
 
             var users = JsonConvert.DeserializeObject<List<ApplicationUser>>(usersJson);

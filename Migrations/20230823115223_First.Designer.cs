@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Communicator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230823111154_First")]
+    [Migration("20230823115223_First")]
     partial class First
     {
         /// <inheritdoc />
@@ -356,7 +356,7 @@ namespace Communicator.Migrations
                     b.HasOne("Communicator.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Friend");

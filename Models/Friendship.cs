@@ -8,17 +8,11 @@ namespace Communicator.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required]
         [ForeignKey("UserId")]
         public string UserId { get; set; }
-        [ValidateNever]
-        public ApplicationUser User { get; set; }
-
-
-        [Required]
+        public ApplicationUser User { get; set; } = null!;
         [ForeignKey("FriendId")]
         public string FriendId { get; set; }
-        [ValidateNever]
-        public ApplicationUser Friend { get; set; }
+        public ApplicationUser Friend { get; set; } = null!;
     }
 }
