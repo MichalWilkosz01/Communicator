@@ -37,11 +37,9 @@ namespace Communicator.Controllers
                     City = user.City,
                     Country = user.Country,
                     PhoneNumber = user.PhoneNumber,
-                    Age = user.Age
-
+                    Age = user.Age,
+                    Name = user.Name
                 };
-
-            Debug.WriteLine(editModel.Id);
             return View(editModel);
         }
         

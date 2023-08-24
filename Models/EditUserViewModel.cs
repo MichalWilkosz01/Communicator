@@ -1,4 +1,5 @@
-﻿using Microsoft.Build.Framework;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace Communicator.Models
 {
@@ -20,5 +21,8 @@ namespace Communicator.Models
         public string Country { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
+        [Required]
+      
+        public string Email { get; set; }
     }
 }
