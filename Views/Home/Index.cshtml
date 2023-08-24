@@ -46,9 +46,9 @@ else if (Model.Count <= 0)
                                 <td>@user.LastName</td>
                                 <td>
 
-                                    <form method="post" asp-controller="Overview" asp-action="AddFriend">
-                                        <input type="hidden" name="userId" value="@user.Id" />
-                                        <button type="submit" class="btn btn-primary" style="background-color:red">Delete Friend</button>
+                                    <form method="post" asp-controller="Home" asp-action="DeleteFriend">
+                                        <input type="hidden" name="friendId" value="@user.Id" />
+                                    <button type="submit" class="btn btn-primary btn-sm" style="background-color:red">Delete Friend</button>
 
                                     </form>
 

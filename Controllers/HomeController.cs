@@ -1,8 +1,10 @@
 ﻿using Communicator.Data;
 using Communicator.Models;
+using Communicator.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace Communicator.Controllers
 {
@@ -11,12 +13,13 @@ namespace Communicator.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
-
-        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
+        private readonly FriendshipService _friendshipService;
+        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, ApplicationDbContext context, FriendshipService friendshipService = null)
         {
             _logger = logger;
             _userManager = userManager;
             _context = context;
+            _friendshipService = friendshipService;
         }
 
         public IActionResult Index()
@@ -40,6 +43,18 @@ namespace Communicator.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult DeleteFriend(string friendId)
+        {
+            var id = _userManager.GetUserId(this.User);
+            if (id != null)
+            {
+                Debug.WriteLine("friendid: " + friendId);
+                _friendshipService.DeleteFriend(id, friendId);
+
+
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

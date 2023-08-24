@@ -1,5 +1,6 @@
 ﻿using Communicator.Data;
 using Communicator.Models;
+using Communicator.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace Communicator.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        public OverviewController(ApplicationDbContext context,UserManager<ApplicationUser> userManager)
+        private readonly FriendshipService _friendshipService;
+        public OverviewController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, FriendshipService friendshipService = null)
         {
             _context = context;
             _userManager = userManager;
+            _friendshipService = friendshipService;
         }
 
         [HttpGet]
@@ -43,22 +46,8 @@ namespace Communicator.Controllers
         public IActionResult AddFriend(string userId)
         {
             var id = _userManager.GetUserId(this.User);
-            var user = _userManager.Users.FirstOrDefault(u => u.Id == id);
-            var friend = _userManager.Users.FirstOrDefault(u => u.Id == userId);
-           
-            if (user != null && friend != null)
-            {
-                var friendship = new Friendship
-                {
-                    User = user,
-                    UserId = user.Id,
-                    Friend = friend,
-                    FriendId = friend.Id
-
-                };
-                _context.Add(friendship);
-            }
-            _context.SaveChanges();
+            _friendshipService.AddFriend(id, userId);
+            
             var userFriendIds = _context.Friendships.Where(u => u.UserId == id).Select(f => f.FriendId).ToList();
             var usersJson = TempData["SearchResults"] as string;
 
