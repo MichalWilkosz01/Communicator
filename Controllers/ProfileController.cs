@@ -23,11 +23,11 @@ namespace Communicator.Controllers
         }
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> EditUser()
+        public IActionResult EditUser()
         {
             
-            var id = _userManager.GetUserId(this.User);
-            var user = _userManager.Users.FirstOrDefault(u => u.Id == id);
+            var id =  _userManager.GetUserId(this.User);
+            var user =  _userManager.Users.FirstOrDefault(u => u.Id == id);
 
             var editModel = new EditUserViewModel
                 {
@@ -38,10 +38,33 @@ namespace Communicator.Controllers
                     Country = user.Country,
                     PhoneNumber = user.PhoneNumber,
                     Age = user.Age,
-                    Name = user.Name
+                    Name = user.Name,
+                    Email = user.Email
                 };
             return View(editModel);
         }
-        
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditUserViewModel userModel)
+        {
+            var id = _userManager.GetUserId(this.User);
+            var user = _userManager.Users.FirstOrDefault(u => u.Id == userModel.Id);
+            user.Name = userModel.Name;
+            user.LastName = userModel.LastName;
+            user.Nick = userModel.Nick;
+            user.City = userModel.City;
+            user.Country = userModel.Country;
+            user.Age = userModel.Age;
+            user.PhoneNumber = userModel.PhoneNumber;
+            user.Email = userModel.Email;
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }

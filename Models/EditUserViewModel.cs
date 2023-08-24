@@ -12,6 +12,7 @@ namespace Communicator.Models
         [Required]
         public string Name { get; set; }
         [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [Required]
         public int Age { get; set; }
@@ -20,9 +21,10 @@ namespace Communicator.Models
         [Required]
         public string Country { get; set; }
         [Required]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         [Required]
-      
+        [EmailAddress]
         public string Email { get; set; }
     }
 }
