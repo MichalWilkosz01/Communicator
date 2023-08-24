@@ -28,7 +28,10 @@ namespace Communicator.Controllers
             
             var id =  _userManager.GetUserId(this.User);
             var user =  _userManager.Users.FirstOrDefault(u => u.Id == id);
-
+            if (user == null)
+            {
+                return NotFound();
+            }
             var editModel = new EditUserViewModel
                 {
                     Id = user.Id,
@@ -46,8 +49,12 @@ namespace Communicator.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditUserViewModel userModel)
         {
-            var id = _userManager.GetUserId(this.User);
+             
             var user = _userManager.Users.FirstOrDefault(u => u.Id == userModel.Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
             user.Name = userModel.Name;
             user.LastName = userModel.LastName;
             user.Nick = userModel.Nick;
