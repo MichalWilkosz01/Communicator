@@ -49,7 +49,7 @@ namespace Communicator.Controllers
             var id = _userManager.GetUserId(this.User);
             if (id != null)
             {
-                Debug.WriteLine("friendid: " + friendId);
+                
                 _friendshipService.DeleteFriend(id, friendId);
 
 

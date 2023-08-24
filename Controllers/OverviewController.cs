@@ -60,6 +60,26 @@ namespace Communicator.Controllers
             return View("Index", overviewPageViewModel);
             
         }
+        public IActionResult DeleteFriend(string friendId)
+        {
+            var id = _userManager.GetUserId(this.User);
+            if (id != null)
+            {
 
+                _friendshipService.DeleteFriend(id, friendId);
+
+
+            }
+            var userFriendIds = _context.Friendships.Where(u => u.UserId == id).Select(f => f.FriendId).ToList();
+            var usersJson = TempData["SearchResults"] as string;
+
+            var users = JsonConvert.DeserializeObject<List<ApplicationUser>>(usersJson);
+            var overviewPageViewModel = new OverviewPageViewModel();
+            overviewPageViewModel.UserFriendIds = userFriendIds;
+            overviewPageViewModel.Users = users;
+            TempData["SearchResults"] = usersJson;
+
+            return View("Index", overviewPageViewModel);
+        }
     }
 }

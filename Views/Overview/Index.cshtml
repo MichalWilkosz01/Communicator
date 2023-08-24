@@ -29,8 +29,11 @@
                     
                                 @if (Model.UserFriendIds.Contains(@user.Id))
                                 {
-
-                                    <button type="submit" class="btn btn-primary" style="background-color:red">Delete Friend</button>
+                                     <form method="post" asp-controller="Overview" asp-action="DeleteFriend">
+                                        <input type="hidden" name="friendId" value="@user.Id" />
+                                        <button type="submit" class="btn btn-primary" style="background-color:red">Delete Friend</button>
+                                    </form>
+                                   
                                 }
                                 else
                                 {
