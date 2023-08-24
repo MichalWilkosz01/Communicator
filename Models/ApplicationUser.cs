@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Communicator.Models
 {
-    public class ApplicationUser:IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         [Required]
         public string Nick { get; set; }
