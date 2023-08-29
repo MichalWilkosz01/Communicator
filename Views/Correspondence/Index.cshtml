@@ -9,7 +9,14 @@
 <body>
    
     <div id="chat">
-        <h1>Chat with @Model.Receiver.Name @Model.Receiver.LastName [<span class="nickname">@Model.Receiver.Nick</span>]</h1>
+        @if (Model.Receiver.Id == _userManager.GetUserId(User))
+        {
+            <h1>Chat with @Model.Sender.Name @Model.Sender.LastName [<span class="nickname">@Model.Sender.Nick</span>]</h1>
+        } else
+        {
+            <h1>Chat with @Model.Receiver.Name @Model.Receiver.LastName [<span class="nickname">@Model.Receiver.Nick</span>]</h1>
+        }
+        
         <ul id="messages" class="message-list">
             @if (Model.Messages != null)
             {
