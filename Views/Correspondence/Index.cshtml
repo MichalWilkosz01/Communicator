@@ -1,4 +1,6 @@
-﻿@model Correspondence
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> _userManager;
+@model Correspondence
 
 <!DOCTYPE html>
 <html>
@@ -7,16 +9,27 @@
 <body>
    
     <h1>Chat with @Model.Receiver.Name @Model.Receiver.LastName [@Model.Receiver.Nick]</h1>
-   @* <div id="chat">
+    <div id="chat">
         <ul id="messages">
             @foreach (var message in Model.Messages)
             {
-                <li>@Model.Sender.Name says: @message.Content</li>
+               
+                <li>
+                    @if (message.Sender.Id == _userManager.GetUserId(User))
+                    {
+                        <p>You:</p>
+                    }else
+                    {
+                        <p>@message.Sender.Name:</p>
+                    }
+                  
+                    <p>@message.Content</p>
+                sent at: @message.SendingTime
+                </li>
             }
         </ul>
-    </div>*@
-    <form id="sendMessage">
-        <input type="hidden" asp-for="Id" />
+    </div>
+    <form id="sendMessage">     
         <input type="text" id="messageInput" name="messageInput" placehoolder="Write message" />
         <button id="sendButton">Send</button>
     </form>
@@ -35,14 +48,7 @@
                         url: "@Url.Action("SaveMessage", "Correspondence")",
                         type: "POST",
                         data: { content: messageInput, correspondenceId: correspondenceId },
-                        success: function (data) {
-                            // Obsłuż sukces, na przykład zaktualizuj widok z nową wiadomością
-                            $("#messages").append('<li>@Model.Sender.Name says: ' + data.content + '</li>');
-                            $("#messageInput").val('');
-                        },
-                        error: function (error) {
-                            console.error('Błąd podczas zapisywania wiadomości: ' + error.responseText);
-                        }
+                       
                     });
                 });
             });

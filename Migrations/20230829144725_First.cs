@@ -210,7 +210,8 @@ namespace Communicator.Migrations
                         name: "FK_Friendships_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -221,11 +222,18 @@ namespace Communicator.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SendingTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CorrespondenceId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Messages_Correspondences_CorrespondenceId",
                         column: x => x.CorrespondenceId,
@@ -296,6 +304,11 @@ namespace Communicator.Migrations
                 name: "IX_Messages_CorrespondenceId",
                 table: "Messages",
                 column: "CorrespondenceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_SenderId",
+                table: "Messages",
+                column: "SenderId");
         }
 
         /// <inheritdoc />

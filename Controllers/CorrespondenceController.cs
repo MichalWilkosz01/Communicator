@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 
 namespace Communicator.Controllers
 {
@@ -42,7 +43,7 @@ namespace Communicator.Controllers
                 }
                 else
                 {
-                    var correspondence = await _context.Correspondences.Include(s => s.Sender).Include(r => r.Receiver).FirstOrDefaultAsync(c => (c.SenderId == user.Id && c.ReceiverId == correspondentId) || (c.SenderId == correspondentId && c.ReceiverId == user.Id));
+                    var correspondence = await _context.Correspondences.Include(s => s.Sender).Include(r => r.Receiver).Include(m => m.Messages).FirstOrDefaultAsync(c => (c.SenderId == user.Id && c.ReceiverId == correspondentId) || (c.SenderId == correspondentId && c.ReceiverId == user.Id));
                     return View(correspondence);
                 }
 
@@ -58,19 +59,24 @@ namespace Communicator.Controllers
             var correspondence = await _context.Correspondences.FirstOrDefaultAsync(c => c.Id == correspondenceId);
             if (correspondence != null)
             {
-                if (correspondence.Messages != null)
+                var userId = _userManager.GetUserId(User);
+                if (correspondence.Messages != null && userId !=null)
                 {
-                    correspondence.Messages.Add(new Message
-                    {
-                        Content = content
-                    }
-                    );
-                    await _context.SaveChangesAsync();
+                   
+
+                    correspondence.Messages.Add(new Models.Message
+                        {
+                            Content = content,
+                            SenderId = userId,
+                            Sender = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId)
+                        }
+                        );
+                        await _context.SaveChangesAsync();
                     return Ok();
-                } else { return NotFound(); }
+                } 
                 
-            } else { return NotFound(); }
-            
+            }
+            return NotFound();
         }
 
 

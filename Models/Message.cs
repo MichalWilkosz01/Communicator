@@ -12,6 +12,10 @@ namespace Communicator.Models
         public string Content { get; set; }
         [Required]
         public DateTime SendingTime { get; set; } = DateTime.Now;
-        
+        [ForeignKey("SenderId")]
+        public string SenderId { get; set; }
+        public ApplicationUser Sender { get; set; } = null!;
+
+
     }
 }

@@ -176,12 +176,18 @@ namespace Communicator.Migrations
                     b.Property<int?>("CorrespondenceId")
                         .HasColumnType("int");
 
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("SendingTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CorrespondenceId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -353,7 +359,7 @@ namespace Communicator.Migrations
                     b.HasOne("Communicator.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Friend");
@@ -366,6 +372,14 @@ namespace Communicator.Migrations
                     b.HasOne("Communicator.Models.Correspondence", null)
                         .WithMany("Messages")
                         .HasForeignKey("CorrespondenceId");
+
+                    b.HasOne("Communicator.Models.ApplicationUser", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
