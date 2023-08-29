@@ -92,3 +92,127 @@ body {
         .custom-table .btn-success:hover {
             background-color: #1e7e34;
         }
+
+
+/* Styl dla nicku u¿ytkownika */
+.nickname {
+    font-weight: bold;
+    color: #3366cc; /* Kolor tekstu nicku */
+}
+
+/* Styl dla wiadomoœci u¿ytkownika */
+.user-message {
+    font-weight: bold;
+    color: #009900; /* Kolor tekstu wiadomoœci u¿ytkownika */
+}
+
+/* Styl dla nazwy nadawcy wiadomoœci */
+.sender-name {
+    font-weight: bold;
+    color: #cc3300; /* Kolor tekstu nazwy nadawcy */
+}
+
+/* Styl dla treœci wiadomoœci */
+.message-content {
+    margin-left: 20px; /* Dodaje wciêcie dla treœci wiadomoœci */
+}
+
+/* Styl dla czasu wys³ania wiadomoœci */
+.message-time {
+    font-style: italic;
+    color: #666666; /* Kolor tekstu czasu */
+}
+
+
+/* Styl dla przycisku "Send" */
+.send-button {
+    background-color: #3366cc; /* Kolor t³a przycisku */
+    color: white; /* Kolor tekstu na przycisku */
+    padding: 10px 20px; /* Wielkoœæ wype³nienia przycisku */
+    border: none; /* Usuniêcie ramki przycisku */
+    border-radius: 5px; /* Zaokr¹glenie rogów przycisku */
+    cursor: pointer; /* Zmiana kursora na wskaŸnik przy najechaniu */
+}
+
+    /* Dodatkowy styl przy najechaniu na przycisk */
+    .send-button:hover {
+        background-color: #2554a7; /* Kolor t³a przycisku po najechaniu */
+    }
+
+
+/* Styl dla pola tekstowego */
+/* Styl dla kontenera formularza */
+.mess-input {
+    text-align: center; /* Wyœrodkowanie zawartoœci formularza */
+}
+
+/* Styl dla pola tekstowego w formularzu */
+#messageInput {
+    width: 70%; /* Szerokoœæ pola tekstowego */
+    padding: 10px; /* Wielkoœæ wype³nienia wokó³ pola tekstowego */
+    font-size: 16px; /* Rozmiar czcionki */
+    border: 1px solid #ccc; /* Grubaœæ i kolor ramki */
+    border-radius: 5px; /* Zaokr¹glenie rogów pola tekstowego */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Cieñ pola tekstowego */
+}
+
+/* Styl dla przycisku w formularzu */
+.send-button {
+    padding: 10px 20px; /* Wielkoœæ wype³nienia przycisku */
+    font-size: 16px; /* Rozmiar czcionki */
+    background-color: #3366cc; /* Kolor t³a przycisku */
+    color: white; /* Kolor tekstu na przycisku */
+    border: none; /* Usuniêcie ramki przycisku */
+    border-radius: 5px; /* Zaokr¹glenie rogów przycisku */
+    cursor: pointer; /* Zmiana kursora na wskaŸnik przy najechaniu */
+}
+
+    /* Dodatkowy styl przy najechaniu na przycisk */
+    .send-button:hover {
+        background-color: #2554a7; /* Kolor t³a przycisku po najechaniu */
+    }
+
+
+
+/* Styl dla listy wiadomoœci */
+.message-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Styl dla pojedynczej wiadomoœci */
+.message {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Styl dla wiadomoœci u¿ytkownika */
+.user-message {
+    font-weight: bold;
+    color: #009900;
+    font-size: 18px; /* Powiêkszenie rozmiaru czcionki wiadomoœci */
+}
+
+/* Styl dla nazwy nadawcy wiadomoœci */
+.sender-name {
+    font-weight: bold;
+    color: #cc3300;
+}
+
+/* Styl dla treœci wiadomoœci */
+.message-content {
+    margin-top: 5px;
+    flex-grow: 1;
+    font-size: 24px; /* Powiêkszenie rozmiaru czcionki treœci wiadomoœci */
+}
+
+/* Styl dla czasu wys³ania wiadomoœci */
+.message-time {
+    font-style: italic;
+    color: #666666;
+    text-align: right;
+}

@@ -8,36 +8,38 @@
 </head>
 <body>
    
-    <h1>Chat with @Model.Receiver.Name @Model.Receiver.LastName [@Model.Receiver.Nick]</h1>
     <div id="chat">
-        <ul id="messages">
+        <h1>Chat with @Model.Receiver.Name @Model.Receiver.LastName [<span class="nickname">@Model.Receiver.Nick</span>]</h1>
+        <ul id="messages" class="message-list">
             @if (Model.Messages != null)
             {
                 @foreach (var message in Model.Messages)
                 {
-
-                    <li>
+                    <li class="message">
                         @if (message.Sender.Id == _userManager.GetUserId(User))
                         {
-                            <p>You:</p>
+                            <p class="user-message">You:</p>
                         }
                         else
                         {
-                            <p>@message.Sender.Name:</p>
+                            <p class="sender-name">@message.Sender.Name:</p>
                         }
 
-                        <p>@message.Content</p>
-                        sent at: @message.SendingTime
+                        <p class="message-content">@message.Content</p>
+                        <p class="message-time">Sent at: @message.SendingTime</p>
                     </li>
                 }
             }
-           
         </ul>
     </div>
-    <form id="sendMessage">     
-        <input type="text" id="messageInput" name="messageInput" placehoolder="Write message" />
-        <button id="sendButton">Send</button>
-    </form>
+
+    <div class="mess-input">
+        <form id="sendMessage">
+            <input type="text" id="messageInput" name="messageInput" placehoolder="Write message" />
+            <button class="send-button" id="sendButton">Send</button>
+        </form>
+    </div>
+    
 
     @section Scripts {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
