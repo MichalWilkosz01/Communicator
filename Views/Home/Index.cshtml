@@ -52,8 +52,10 @@ else if (Model.Count <= 0)
 
                                     </form>
 
-
-                                    <button type="button" class="btn btn-success btn-sm">Write a Message</button>
+                                <form method="post" asp-controller="Correspondence" asp-action="Index">
+                                    <input type="hidden" name="correspondentId" value="@user.Id" />
+                                    <button type="submit" class="btn btn-success btn-sm">Write a Message</button>
+                                </form>
 
                                 </td>
                             </tr>
