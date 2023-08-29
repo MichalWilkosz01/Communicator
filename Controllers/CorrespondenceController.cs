@@ -66,10 +66,11 @@ namespace Communicator.Controllers
                     }
                     );
                     await _context.SaveChangesAsync();
+                    return Ok();
                 } else { return NotFound(); }
                 
             } else { return NotFound(); }
-            return Ok();
+            
         }
 
 
