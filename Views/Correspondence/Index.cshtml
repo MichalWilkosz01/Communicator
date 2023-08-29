@@ -11,22 +11,27 @@
     <h1>Chat with @Model.Receiver.Name @Model.Receiver.LastName [@Model.Receiver.Nick]</h1>
     <div id="chat">
         <ul id="messages">
-            @foreach (var message in Model.Messages)
+            @if (Model.Messages != null)
             {
-               
-                <li>
-                    @if (message.Sender.Id == _userManager.GetUserId(User))
-                    {
-                        <p>You:</p>
-                    }else
-                    {
-                        <p>@message.Sender.Name:</p>
-                    }
-                  
-                    <p>@message.Content</p>
-                sent at: @message.SendingTime
-                </li>
+                @foreach (var message in Model.Messages)
+                {
+
+                    <li>
+                        @if (message.Sender.Id == _userManager.GetUserId(User))
+                        {
+                            <p>You:</p>
+                        }
+                        else
+                        {
+                            <p>@message.Sender.Name:</p>
+                        }
+
+                        <p>@message.Content</p>
+                        sent at: @message.SendingTime
+                    </li>
+                }
             }
+           
         </ul>
     </div>
     <form id="sendMessage">     
