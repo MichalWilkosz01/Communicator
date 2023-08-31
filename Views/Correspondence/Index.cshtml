@@ -58,7 +58,6 @@
     
 
     @section Scripts {
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(function () {
                 $("#sendButton").click(function (e) {
@@ -85,34 +84,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>
-@*
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/your-signalr-hub-url"></script>
-    <script>
-        var connection = new signalR.HubConnectionBuilder()
-            .withUrl("/your-signalr-hub-url")
-            .build();
 
-        connection.on("ReceiveMessage", function (sender, message) {
-            var messageList = document.getElementById("messages");
-            var li = document.createElement("li");
-            li.textContent = sender + ": " + message;
-            messageList.appendChild(li);
-        });
-
-        connection.start().catch(function (err) {
-            return console.error(err.toString());
-        });
-
-        document.getElementById("sendButton").addEventListener("click", function (event) {
-            var messageInput = document.getElementById("messageInput");
-            var message = messageInput.value;
-            connection.invoke("SendMessage", "@Model.OtherUserId", message).catch(function (err) {
-                return console.error(err.toString());
-            });
-            messageInput.value = "";
-            event.preventDefault();
-        });
-    </script>*@
 </body>
 </html>

@@ -27,5 +27,8 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     connection.invoke("SendMessageToGroup", sender, receiver, message).catch(function (err) {
         return console.error(err.toString());
     });
+    connection.invoke("SendMessageToGroup", receiver, receiver, message).catch(function (err) {
+        return console.error(err.toString());
+    });
     event.preventDefault();
 });

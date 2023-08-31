@@ -9,13 +9,19 @@ namespace Communicator.Hubs
             Groups.AddToGroupAsync(Context.ConnectionId, Context.User.Identity.Name);
             return base.OnConnectedAsync();
         }
-        public async Task SendMessage(string user, string messageContent)
+        public async Task SendMessage(string receiver, string messageContent)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, messageContent);
+            var sender = Context.User.Identity.Name;
+
+            await Clients.User(receiver).SendAsync("ReceiveMessage", sender, messageContent);
+            await Clients.Caller.SendAsync("ReceiveMessage", sender, messageContent);
         }
-        public Task SendMessageToGroup(string sender, string receiver, string messageContent)
+        public async Task SendMessageToGroup(string sender, string receiver, string messageContent)
         {
-           return Clients.Group(receiver).SendAsync("ReceiveMessage",sender, messageContent);
+            
+            await Clients.Group(receiver).SendAsync("ReceiveMessage", sender, messageContent);
+            
+            //return Clients.Group(receiver).SendAsync("ReceiveMessage", sender, messageContent);
         }
 
     }
