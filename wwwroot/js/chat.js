@@ -21,10 +21,9 @@ connection.start().then(function () {
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    var sender = document.getElementById("senderInput").value;
     var receiver = document.getElementById("receiverInput").value;
     var message = document.getElementById("messageInput").value;
-    connection.invoke("SendDirectMessage", sender, receiver, message).catch(function (err) {
+    connection.invoke("SendDirectMessage", receiver, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

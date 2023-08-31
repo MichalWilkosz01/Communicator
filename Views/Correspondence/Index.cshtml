@@ -42,7 +42,7 @@
 
     <div class="mess-input">
         <form id="sendMessage">                      
-            <input type="hidden" id="senderInput" value="@_userManager.FindByIdAsync(_userManager.GetUserId(User))" />
+        @*  //  <input type="hidden" id="senderInput" value="@_userManager.FindByIdAsync(_userManager.GetUserId(User))" />*@
             @if (Model.Receiver.Id == _userManager.GetUserId(User))
             {
                 <input type="hidden" id="receiverInput" value="@_userManager.FindByIdAsync(_userManager.GetUserId(User))" />
