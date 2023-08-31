@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Communicator.Models;
 using Communicator.Services;
+using Communicator.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,5 +42,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
+app.MapHub<ChatHub>("/chatHub");
 app.Run();
