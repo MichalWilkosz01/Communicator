@@ -42,7 +42,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         + currentdate.getFullYear() + " "
         + currentdate.getHours() + ":"
         + currentdate.getMinutes() + ":"
-        + currentdate.getSeconds();
+        + currentdate.getSeconds().toPrecision(2);
     var message = document.getElementById("messageInput").value;
     var receiverId = document.getElementById("receiverInput").value;
     connection.invoke("SendMessage", message, receiverId, sendingTime).catch(function (err) {
