@@ -43,21 +43,23 @@ namespace Communicator.Hubs
             if (receiverId != null )
             {
                 string connId;
-                ApplicationUser sender; 
+                ApplicationUser messageSender; 
                 if(_userManager.GetUserId(Context.User) == receiverId)
                 {
-                    var recId = _context.Correspondences.FirstOrDefault(c => c.ReceiverId == receiverId).SenderId;
-                    sender = _userManager.Users.FirstOrDefault(u => u.Id == recId);
-                    connId = _chatService.GetConnectionId(recId);
-                    
+                    var usrId = _userManager.GetUserId(Context.User);
+                    var sender = await _context.Correspondences.Include(c => c.Sender).FirstOrDefaultAsync(c => (c.SenderId == receiverId && c.ReceiverId == usrId) || (c.SenderId == usrId && c.ReceiverId == receiverId));
+                    messageSender = sender.Sender;
+                    connId = _chatService.GetConnectionId(sender.Sender.Id);
+                   
+                    // naprawić trzeba
                 }
                 else
                 {
-                    sender = _userManager.Users.FirstOrDefault(u => u.Id == receiverId);
+                    messageSender = _userManager.Users.FirstOrDefault(u => u.Id == receiverId);
                     connId = _chatService.GetConnectionId(receiverId);
                 }
                 
-                await Clients.Client(connId).SendAsync("ReceiveMessage", messageContent, sendingTime, sender.Name);
+                await Clients.Client(connId).SendAsync("ReceiveMessage", messageContent, sendingTime, messageSender.Name);
             }
         }
     }
