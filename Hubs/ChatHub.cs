@@ -3,6 +3,9 @@ using Communicator.Models;
 using Communicator.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using System.Data.Entity;
+using System.Drawing;
 
 namespace Communicator.Hubs
 {
@@ -33,23 +36,28 @@ namespace Communicator.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(string messageContent, string receiverId)
+        public async Task SendMessage(string messageContent, string receiverId, string sendingTime)
         {
-            await Clients.Caller.SendAsync("ReceiveMessage", messageContent);
+            await Clients.Caller.SendAsync("SendMessage", messageContent, sendingTime);
              
             if (receiverId != null )
             {
                 string connId;
+                ApplicationUser sender; 
                 if(_userManager.GetUserId(Context.User) == receiverId)
                 {
                     var recId = _context.Correspondences.FirstOrDefault(c => c.ReceiverId == receiverId).SenderId;
+                    sender = _userManager.Users.FirstOrDefault(u => u.Id == recId);
                     connId = _chatService.GetConnectionId(recId);
+                    
                 }
                 else
                 {
+                    sender = _userManager.Users.FirstOrDefault(u => u.Id == receiverId);
                     connId = _chatService.GetConnectionId(receiverId);
                 }
-                await Clients.Client(connId).SendAsync("ReceiveMessage", messageContent);
+                
+                await Clients.Client(connId).SendAsync("ReceiveMessage", messageContent, sendingTime, sender.Name);
             }
         }
     }
