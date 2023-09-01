@@ -37,7 +37,7 @@ connection.start().then(function () {
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var currentdate = new Date();
-    var sendingTime = "Sent at: " + currentdate.getDate() + "-"
+    var sendingTime = currentdate.getDate() + "-"
         + (currentdate.getMonth() + 1) + "-"
         + currentdate.getFullYear() + " "
         + currentdate.getHours() + ":"
