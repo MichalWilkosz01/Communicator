@@ -36,30 +36,25 @@ namespace Communicator.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(string messageContent, string receiverId, string sendingTime)
+        public async Task SendMessage(string messageContent, string receiverId,string CorrespondenceSenderId, string sendingTime)
         {
             await Clients.Caller.SendAsync("SendMessage", messageContent, sendingTime);
              
             if (receiverId != null )
             {
                 string connId;
-                ApplicationUser messageSender; 
+                var sender = await _userManager.FindByIdAsync(_userManager.GetUserId(Context.User));
+                var senderName = sender.Name;
                 if(_userManager.GetUserId(Context.User) == receiverId)
-                {
-                    var usrId = _userManager.GetUserId(Context.User);
-                    var sender = await _context.Correspondences.Include(c => c.Sender).FirstOrDefaultAsync(c => (c.SenderId == receiverId && c.ReceiverId == usrId) || (c.SenderId == usrId && c.ReceiverId == receiverId));
-                    messageSender = sender.Sender;
-                    connId = _chatService.GetConnectionId(sender.Sender.Id);
-                   
-                    // naprawić trzeba
+                {                
+                    connId = _chatService.GetConnectionId(CorrespondenceSenderId);
                 }
                 else
                 {
-                    messageSender = _userManager.Users.FirstOrDefault(u => u.Id == receiverId);
                     connId = _chatService.GetConnectionId(receiverId);
                 }
                 
-                await Clients.Client(connId).SendAsync("ReceiveMessage", messageContent, sendingTime, messageSender.Name);
+                await Clients.Client(connId).SendAsync("ReceiveMessage", messageContent, sendingTime,senderName );
             }
         }
     }

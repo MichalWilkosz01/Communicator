@@ -21,7 +21,7 @@ connection.on("SendMessage", function (message, time) {
     const li = document.createElement("li");
     li.className = "message";
     li.innerHTML = `
-        <p class="sender-name">You:</p>
+        <p class="user-message">You:</p>
         <p class="message-content">${message}</p>
         <p class="message-time">Sent at: ${time}</p>
     `;
@@ -42,10 +42,11 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         + currentdate.getFullYear() + " "
         + currentdate.getHours() + ":"
         + currentdate.getMinutes() + ":"
-        + currentdate.getSeconds().toPrecision(2);
+        + currentdate.getSeconds();
     var message = document.getElementById("messageInput").value;
-    var receiverId = document.getElementById("receiverInput").value;
-    connection.invoke("SendMessage", message, receiverId, sendingTime).catch(function (err) {
+    var senderId = document.getElementById("senderIdInput").value;
+    var receiverId = document.getElementById("receiverIdInput").value;
+    connection.invoke("SendMessage", message, receiverId,senderId, sendingTime).catch(function (err) {
         return console.error(err.toString());
     });
     
