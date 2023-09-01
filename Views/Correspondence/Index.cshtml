@@ -42,15 +42,17 @@
 
     <div class="mess-input">
         <form id="sendMessage">                      
-        @*  //  <input type="hidden" id="senderInput" value="@_userManager.FindByIdAsync(_userManager.GetUserId(User))" />*@
+            @*<input type="hidden" id="senderInput" value="@_userManager.GetUserId(User)" />*@
+
             @if (Model.Receiver.Id == _userManager.GetUserId(User))
             {
-                <input type="hidden" id="receiverInput" value="@_userManager.FindByIdAsync(_userManager.GetUserId(User))" />
+                <input type="hidden" id="receiverInput" value="@_userManager.GetUserId(User)" />
             }
             else
             {
-                <input type="hidden" id="receiverInput" value="@_userManager.Users.FirstOrDefault(u => u.Id == Model.ReceiverId)" />
-            }                               
+                <input type="hidden" id="receiverInput" value="@_userManager.Users.FirstOrDefault(u => u.Id == Model.ReceiverId).Id" />
+            }         
+            
             <input type="text" id="messageInput" name="messageInput" placehoolder="Write message" />
             <button class="send-button" id="sendButton">Send</button>
         </form>
