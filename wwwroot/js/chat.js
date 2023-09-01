@@ -37,12 +37,31 @@ connection.start().then(function () {
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var currentdate = new Date();
-    var sendingTime = currentdate.getDate() + "-"
-        + (currentdate.getMonth() + 1) + "-"
-        + currentdate.getFullYear() + " "
-        + currentdate.getHours() + ":"
-        + currentdate.getMinutes() + ":"
-        + currentdate.getSeconds();
+    var day = currentdate.getDate();
+    var month = currentdate.getMonth() + 1; // Dodaj 1, ponieważ styczeń jest liczbą 0 w obiekcie Date
+    var year = currentdate.getFullYear();
+    var hours = currentdate.getHours();
+    var minutes = currentdate.getMinutes();
+    var seconds = currentdate.getSeconds();
+
+    // Dodaj zero z przodu, jeśli liczba jest mniejsza niż 10
+    if (day < 10) {
+        day = "0" + day;
+    }
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+
+    var sendingTime = day + "." + month + "." + year + " " + hours + ":" + minutes + ":" + seconds;
     var message = document.getElementById("messageInput").value;
     var senderId = document.getElementById("senderIdInput").value;
     var receiverId = document.getElementById("receiverIdInput").value;
