@@ -123,23 +123,6 @@ body {
     color: #666666; /* Kolor tekstu czasu */
 }
 
-
-/* Styl dla przycisku "Send" */
-.send-button {
-    background-color: #3366cc; /* Kolor t³a przycisku */
-    color: white; /* Kolor tekstu na przycisku */
-    padding: 10px 20px; /* Wielkoœæ wype³nienia przycisku */
-    border: none; /* Usuniêcie ramki przycisku */
-    border-radius: 5px; /* Zaokr¹glenie rogów przycisku */
-    cursor: pointer; /* Zmiana kursora na wskaŸnik przy najechaniu */
-}
-
-    /* Dodatkowy styl przy najechaniu na przycisk */
-    .send-button:hover {
-        background-color: #2554a7; /* Kolor t³a przycisku po najechaniu */
-    }
-
-
 /* Styl dla pola tekstowego */
 /* Styl dla kontenera formularza */
 .mess-input {
@@ -172,7 +155,12 @@ body {
         background-color: #2554a7; /* Kolor t³a przycisku po najechaniu */
     }
 
-
+    .send-button.disabled-button {
+        background-color: #ccc;
+        color: #666;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 
 /* Styl dla listy wiadomoœci */
 .message-list {
@@ -208,6 +196,7 @@ body {
     margin-top: 5px;
     flex-grow: 1;
     font-size: 24px; /* Powiêkszenie rozmiaru czcionki treœci wiadomoœci */
+    word-wrap: break-word;
 }
 
 /* Styl dla czasu wys³ania wiadomoœci */

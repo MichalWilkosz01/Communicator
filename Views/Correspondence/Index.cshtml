@@ -53,35 +53,62 @@
                 <input type="hidden" id="receiverIdInput" value="@_userManager.Users.FirstOrDefault(u => u.Id == Model.ReceiverId).Id" />
             }         
             
-            <input type="text" id="messageInput" name="messageInput" placehoolder="Write message" />
-            <button class="send-button" id="sendButton">Send</button>
+            <input type="text" id="messageInput" name="messageInput" placeholder="Write message" />
+            <button class="send-button" id="sendButton" disabled>Send</button>
         </form>
     </div>
     
 
     @section Scripts {
+
+        @*Skrypt do wylaczania przycisku a w linijce wyzej przy send dodalem disabled i tez nie dziala*@
+        <script>
+            $("#messageInput").on("input", function () {
+                var messageInput = $(this).val();
+                var sendButton = $("#sendButton");
+
+                if (messageInput.trim() !== "") {
+                    sendButton.removeClass("disabled-button");
+                    sendButton.prop("disabled", false);
+                } else {
+                    sendButton.addClass("disabled-button");
+                    sendButton.prop("disabled", true);
+                }
+            });
+                                });
+        </script>
+
+
         <script>
             $(function () {
                 $("#sendButton").click(function (e) {
                     e.preventDefault();
                     
                     var messageInput = $("#messageInput").val();
-                    var correspondenceId = @Model.Id;
+                    if (messageInput.trim() !== "") {
+                        var correspondenceId = @Model.Id;
 
-                    $.ajax({
-                        url: "@Url.Action("SaveMessage", "Correspondence")",
-                        type: "POST",
-                        data: { content: messageInput, correspondenceId: correspondenceId },
-                       
-                    });
+                        $.ajax({
+                            url: "@Url.Action("SaveMessage", "Correspondence")",
+                            type: "POST",
+                            data: { content: messageInput, correspondenceId: correspondenceId },
+
+                        });
+
+                        document.getElementById("messageInput").value = "";
+                    }
+                    
                 });
             });
         </script>
+
+
+        
     }
       
   
-      
-
+    
+    
             
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
