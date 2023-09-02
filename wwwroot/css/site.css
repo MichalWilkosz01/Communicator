@@ -1,4 +1,4 @@
-html {
+Ôªøhtml {
   font-size: 14px;
 }
 
@@ -39,7 +39,7 @@ body {
     border: 1px solid #ddd;
 }
 
-    /* Styl dla nag≥Ûwka tabeli */
+    /* Styl dla nag≈Ç√≥wka tabeli */
     .custom-table thead {
         background-color: #333;
         color: #fff;
@@ -52,7 +52,7 @@ body {
         border-bottom: 1px solid #ddd;
     }
 
-    /* ZmieÒ kolor wierszy na przemiennie */
+    /* Zmie≈Ñ kolor wierszy na przemiennie */
     .custom-table tbody tr:nth-child(even) {
         background-color: #f2f2f2;
     }
@@ -62,7 +62,7 @@ body {
         background-color: #ddd;
     }
 
-    /* Styl dla przyciskÛw w komÛrkach */
+    /* Styl dla przycisk√≥w w kom√≥rkach */
     .custom-table .btn {
         padding: 5px 10px;
         font-size: 14px;
@@ -94,30 +94,30 @@ body {
         }
 
 
-/* Styl dla nicku uøytkownika */
+/* Styl dla nicku u≈ºytkownika */
 .nickname {
     font-weight: bold;
     color: #3366cc; /* Kolor tekstu nicku */
 }
 
-/* Styl dla wiadomoúci uøytkownika */
+/* Styl dla wiadomo≈õci u≈ºytkownika */
 .user-message {
     font-weight: bold;
-    color: #009900; /* Kolor tekstu wiadomoúci uøytkownika */
+    color: #009900; /* Kolor tekstu wiadomo≈õci u≈ºytkownika */
 }
 
-/* Styl dla nazwy nadawcy wiadomoúci */
+/* Styl dla nazwy nadawcy wiadomo≈õci */
 .sender-name {
     font-weight: bold;
     color: #cc3300; /* Kolor tekstu nazwy nadawcy */
 }
 
-/* Styl dla treúci wiadomoúci */
+/* Styl dla tre≈õci wiadomo≈õci */
 .message-content {
-    margin-left: 20px; /* Dodaje wciÍcie dla treúci wiadomoúci */
+    margin-left: 20px; /* Dodaje wciƒôcie dla tre≈õci wiadomo≈õci */
 }
 
-/* Styl dla czasu wys≥ania wiadomoúci */
+/* Styl dla czasu wys≈Çania wiadomo≈õci */
 .message-time {
     font-style: italic;
     color: #666666; /* Kolor tekstu czasu */
@@ -126,33 +126,33 @@ body {
 /* Styl dla pola tekstowego */
 /* Styl dla kontenera formularza */
 .mess-input {
-    text-align: center; /* Wyúrodkowanie zawartoúci formularza */
+    text-align: center; /* Wy≈õrodkowanie zawarto≈õci formularza */
 }
 
 /* Styl dla pola tekstowego w formularzu */
 #messageInput {
-    width: 70%; /* SzerokoúÊ pola tekstowego */
-    padding: 10px; /* WielkoúÊ wype≥nienia wokÛ≥ pola tekstowego */
+    width: 70%; /* Szeroko≈õƒá pola tekstowego */
+    padding: 10px; /* Wielko≈õƒá wype≈Çnienia wok√≥≈Ç pola tekstowego */
     font-size: 16px; /* Rozmiar czcionki */
-    border: 1px solid #ccc; /* GrubaúÊ i kolor ramki */
-    border-radius: 5px; /* Zaokrπglenie rogÛw pola tekstowego */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* CieÒ pola tekstowego */
+    border: 1px solid #ccc; /* Gruba≈õƒá i kolor ramki */
+    border-radius: 5px; /* ZaokrƒÖglenie rog√≥w pola tekstowego */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Cie≈Ñ pola tekstowego */
 }
 
 /* Styl dla przycisku w formularzu */
 .send-button {
-    padding: 10px 20px; /* WielkoúÊ wype≥nienia przycisku */
+    padding: 10px 20px; /* Wielko≈ì√¶ wype¬≥nienia przycisku */
     font-size: 16px; /* Rozmiar czcionki */
-    background-color: #3366cc; /* Kolor t≥a przycisku */
+    background-color: #3366cc; /* Kolor t¬≥a przycisku */
     color: white; /* Kolor tekstu na przycisku */
-    border: none; /* UsuniÍcie ramki przycisku */
-    border-radius: 5px; /* Zaokrπglenie rogÛw przycisku */
-    cursor: pointer; /* Zmiana kursora na wskaünik przy najechaniu */
+    border: none; /* Usuni√™cie ramki przycisku */
+    border-radius: 5px; /* Zaokr¬πglenie rog√≥w przycisku */
+    cursor: pointer; /* Zmiana kursora na wska≈∏nik przy najechaniu */
 }
 
     /* Dodatkowy styl przy najechaniu na przycisk */
     .send-button:hover {
-        background-color: #2554a7; /* Kolor t≥a przycisku po najechaniu */
+        background-color: #2554a7; /* Kolor t¬≥a przycisku po najechaniu */
     }
 
     .send-button.disabled-button {
@@ -161,14 +161,13 @@ body {
         cursor: not-allowed;
         pointer-events: none;
     }
-
-/* Styl dla listy wiadomoúci */
+/* Styl dla listy wiadomo≈õci */
 .message-list {
     list-style-type: none;
     padding: 0;
 }
 
-/* Styl dla pojedynczej wiadomoúci */
+/* Styl dla pojedynczej wiadomo≈õci */
 .message {
     display: flex;
     flex-direction: column;
@@ -178,28 +177,28 @@ body {
     margin-bottom: 10px;
 }
 
-/* Styl dla wiadomoúci uøytkownika */
+/* Styl dla wiadomo≈õci u≈ºytkownika */
 .user-message {
     font-weight: bold;
     color: #009900;
-    font-size: 18px; /* PowiÍkszenie rozmiaru czcionki wiadomoúci */
+    font-size: 18px; /* Powiƒôkszenie rozmiaru czcionki wiadomo≈õci */
 }
 
-/* Styl dla nazwy nadawcy wiadomoúci */
+/* Styl dla nazwy nadawcy wiadomo≈õci */
 .sender-name {
     font-weight: bold;
     color: #cc3300;
 }
 
-/* Styl dla treúci wiadomoúci */
+/* Styl dla tre≈õci wiadomo≈õci */
 .message-content {
     margin-top: 5px;
     flex-grow: 1;
-    font-size: 24px; /* PowiÍkszenie rozmiaru czcionki treúci wiadomoúci */
+    font-size: 24px; /* Powiƒôkszenie rozmiaru czcionki tre≈õci wiadomo≈õci */
     word-wrap: break-word;
 }
 
-/* Styl dla czasu wys≥ania wiadomoúci */
+/* Styl dla czasu wys≈Çania wiadomo≈õci */
 .message-time {
     font-style: italic;
     color: #666666;

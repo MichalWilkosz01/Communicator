@@ -2,8 +2,7 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-//Disable the send button until connection is established.
-document.getElementById("sendButton").disabled = true;
+
 
 connection.on("ReceiveMessage", function (message, time, senderName) {
     const messageList = document.getElementById("messages");
@@ -28,7 +27,7 @@ connection.on("SendMessage", function (message, time) {
     messageList.appendChild(li);
 });
 connection.start().then(function () {
-    document.getElementById("sendButton").disabled = false;
+    return console.log("Connection has been established ")
 }).catch(function (err) {
     return console.error(err.toString());
 });
@@ -38,13 +37,13 @@ connection.start().then(function () {
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var currentdate = new Date();
     var day = currentdate.getDate();
-    var month = currentdate.getMonth() + 1; // Dodaj 1, ponieważ styczeń jest liczbą 0 w obiekcie Date
+    var month = currentdate.getMonth() + 1; 
     var year = currentdate.getFullYear();
     var hours = currentdate.getHours();
     var minutes = currentdate.getMinutes();
     var seconds = currentdate.getSeconds();
 
-    // Dodaj zero z przodu, jeśli liczba jest mniejsza niż 10
+
     if (day < 10) {
         day = "0" + day;
     }

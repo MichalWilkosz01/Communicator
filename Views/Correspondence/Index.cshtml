@@ -54,7 +54,7 @@
             }         
             
             <input type="text" id="messageInput" name="messageInput" placeholder="Write message" />
-            <button class="send-button" id="sendButton" disabled>Send</button>
+            <button class="send-button disabled-button" id="sendButton" disabled>Send</button>
         </form>
     </div>
     
@@ -63,19 +63,21 @@
 
         @*Skrypt do wylaczania przycisku a w linijce wyzej przy send dodalem disabled i tez nie dziala*@
         <script>
-            $("#messageInput").on("input", function () {
-                var messageInput = $(this).val();
+            $(function () {
+                var messageInput = $("#messageInput");
                 var sendButton = $("#sendButton");
 
-                if (messageInput.trim() !== "") {
-                    sendButton.removeClass("disabled-button");
-                    sendButton.prop("disabled", false);
-                } else {
-                    sendButton.addClass("disabled-button");
-                    sendButton.prop("disabled", true);
-                }
+                messageInput.on("input", function () {
+
+                    if (messageInput.val().trim() !== "") {
+                        sendButton.removeClass("disabled-button");
+                        sendButton.prop("disabled", false);
+                    } else {
+                        sendButton.addClass("disabled-button");
+                        sendButton.prop("disabled", true);
+                    }
+                });
             });
-                                });
         </script>
 
 
