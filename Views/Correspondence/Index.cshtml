@@ -85,7 +85,8 @@
             $(function () {
                 $("#sendButton").click(function (e) {
                     e.preventDefault();
-                    
+                    $("#sendButton").addClass("disabled-button");
+                    $("#sendButton").prop("disabled",true);
                     var messageInput = $("#messageInput").val();
                     if (messageInput.trim() !== "") {
                         var correspondenceId = @Model.Id;
