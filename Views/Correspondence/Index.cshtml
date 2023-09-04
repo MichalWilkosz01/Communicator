@@ -104,7 +104,16 @@
             });
         </script>
 
+        @*Scrolling down*@
+        <script>
+            $(document).ready(function () {
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
 
+                $("#sendButton").click(function () {
+                    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+                });
+            });
+        </script>
         
     }
       
