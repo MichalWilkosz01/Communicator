@@ -4,15 +4,16 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 
 
-connection.on("ReceiveMessage", function (message, time, senderName) {
+connection.on("ReceiveMessage", function (message, time, senderName, receiverName) {
     const messageList = document.getElementById("messages");
     const li = document.createElement("li");
     li.className = "message";
-    li.innerHTML = `
-        <p class="sender-name">${senderName}:</p>
-        <p class="message-content">${message}</p>
-        <p class="message-time">Sent at: ${time}</p>
-    `;
+    if (senderName !== receiverName) {
+        li.innerHTML = `
+            <p class="sender-name">${senderName}:</p>
+            <p class="message-content">${message}</p>
+            <p class="message-time">Sent at: ${time}</p>
+        `;   
     messageList.appendChild(li);
 });
 connection.on("SendMessage", function (message, time) {
@@ -64,10 +65,14 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     var message = document.getElementById("messageInput").value;
     var senderId = document.getElementById("senderIdInput").value;
     var receiverId = document.getElementById("receiverIdInput").value;
+    connection.invoke("PreparePrivateGroup", senderId, receiverId).catch(function (err) {
+        return console.error(err.toString());
+    })
     connection.invoke("SendMessage", message, receiverId,senderId, sendingTime).catch(function (err) {
         return console.error(err.toString());
     });
-    
     event.preventDefault();
+    
 });
+
 
