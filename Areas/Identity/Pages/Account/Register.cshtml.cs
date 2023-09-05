@@ -19,6 +19,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations.Schema;
+using Communicator.Data;
+using System.Data;
 
 namespace Communicator.Areas.Identity.Pages.Account
 {
@@ -30,13 +33,15 @@ namespace Communicator.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +49,7 @@ namespace Communicator.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -78,6 +84,7 @@ namespace Communicator.Areas.Identity.Pages.Account
             /// 
             [Required]
             [DataType(DataType.Text)]
+
             public string Nick { get; set; }
             [Required]
             [DataType(DataType.Text)]
@@ -133,6 +140,18 @@ namespace Communicator.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            var ifNickExists = _context.Users.Any(n => n.Nick == Input.Nick);
+            if (ifNickExists)
+            {
+                ModelState.AddModelError(string.Empty, "Nick already exists");
+                return Page(); 
+            }
+            var ifPhoneNumberExists = _context.Users.Any(p => p.PhoneNumber == Input.PhoneNumber);
+            if (ifPhoneNumberExists)
+            {
+                ModelState.AddModelError(string.Empty, "Phone number is already taken");
+                return Page(); // 
+            }
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -176,7 +195,14 @@ namespace Communicator.Areas.Identity.Pages.Account
                 }
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    if (error.Code == "DuplicateUserName")
+                    {
+                        ModelState.AddModelError(string.Empty, $"Email '{Input.Email}' is already registered.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 
