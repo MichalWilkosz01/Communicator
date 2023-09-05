@@ -100,17 +100,6 @@ body {
     color: #3366cc; /* Kolor tekstu nicku */
 }
 
-/* Styl dla wiadomości użytkownika */
-.user-message {
-    font-weight: bold;
-    color: #009900; /* Kolor tekstu wiadomości użytkownika */
-}
-
-/* Styl dla nazwy nadawcy wiadomości */
-.sender-name {
-    font-weight: bold;
-    color: #cc3300; /* Kolor tekstu nazwy nadawcy */
-}
 
 /* Styl dla treści wiadomości */
 .message-content {
@@ -187,7 +176,7 @@ body {
 /* Styl dla nazwy nadawcy wiadomości */
 .sender-name {
     font-weight: bold;
-    color: #cc3300;
+    color: #115ea6;
 }
 
 /* Styl dla treści wiadomości */

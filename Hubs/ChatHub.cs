@@ -39,33 +39,30 @@ namespace Communicator.Hubs
         }
         public async Task PreparePrivateGroup(string senderId, string receiverId)
         {
-            string groupName = GetPrivateGroupName(senderId, receiverId);
+            string groupName = _chatService.GetPrivateGroupName(senderId, receiverId);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);                
-        }
-        private string GetPrivateGroupName(string senderId, string receiverId)
-        {
-            var compare = string.CompareOrdinal(senderId, receiverId) < 0;
-            return compare ? $"{senderId}-{receiverId}" : $"{receiverId}-{senderId}";
-        }
+        }      
         public async Task SendMessage(string messageContent, string receiverId,string CorrespondenceSenderId, string sendingTime)
-        {
-            await Clients.Caller.SendAsync("SendMessage", messageContent, sendingTime);
+        {           
             if (receiverId != null )
             {
                 string groupName;
                 var sender = await _userManager.FindByIdAsync(_userManager.GetUserId(Context.User));
-                var senderName = sender.Name;
+                var senderName = $"{sender.Name} {sender.LastName}"; 
+               
                 if (_userManager.GetUserId(Context.User) == receiverId)
                 {
-                    groupName = GetPrivateGroupName(sender.Id, CorrespondenceSenderId);
+                    groupName = _chatService.GetPrivateGroupName(sender.Id, CorrespondenceSenderId);
+                    
                 }
                 else
                 {
-                     groupName = GetPrivateGroupName(sender.Id, receiverId);
+                     groupName = _chatService.GetPrivateGroupName(sender.Id, receiverId);
+                   
                 }
-                var receiver = await _userManager.FindByIdAsync(receiverId);
-                await Clients.Group(groupName).SendAsync("ReceiveMessage", messageContent, sendingTime, senderName, receiver.Name);
-               // await Clients.Client(connId).SendAsync("ReceiveMessage", messageContent, sendingTime,senderName );
+               
+                await Clients.Group(groupName).SendAsync("ReceiveMessage", messageContent, sendingTime, senderName);
+               
             }
         }
     }

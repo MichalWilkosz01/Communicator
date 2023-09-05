@@ -36,22 +36,10 @@
                 }
             }
         }
-
-        public string[] GetOnlineUsers()
+        public string GetPrivateGroupName(string senderId, string receiverId)
         {
-            lock (Users)
-            {
-                return Users.OrderBy(x => x.Value).Select(x => x.Key).ToArray();
-            }
-        }
-
-        public string GetConnectionId(string userId)
-        {
-            lock (Users)
-            {
-                var result = Users[userId];
-                return result;
-            }
+            var compare = string.CompareOrdinal(senderId, receiverId) < 0;
+            return compare ? $"{senderId}-{receiverId}" : $"{receiverId}-{senderId}";
         }
     }
 }

@@ -22,16 +22,8 @@
             {
                 @foreach (var message in Model.Messages)
                 {
-                    <li class="message">
-                        @if (message.Sender.Id == _userManager.GetUserId(User))
-                        {
-                            <p class="user-message">You:</p>
-                        }
-                        else
-                        {
-                            <p class="sender-name">@message.Sender.Name:</p>
-                        }
-
+                    <li class="message">                      
+                        <p class="sender-name">@message.Sender.Name @message.Sender.LastName: </p>
                         <p class="message-content">@message.Content</p>
                         <p class="message-time">Sent at: @message.SendingTime</p>
                     </li>
@@ -59,9 +51,7 @@
     </div>
     
 
-    @section Scripts {
-
-        @*Skrypt do wylaczania przycisku a w linijce wyzej przy send dodalem disabled i tez nie dziala*@
+    @section Scripts {  
         <script>
             $(function () {
                 var messageInput = $("#messageInput");
@@ -79,8 +69,6 @@
                 });
             });
         </script>
-
-
         <script>
             $(function () {
                 $("#sendButton").click(function (e) {
@@ -104,8 +92,6 @@
                 });
             });
         </script>
-
-        @*Scrolling down*@
         <script>
             $(document).ready(function () {
                 $("html, body").animate({ scrollTop: $(document).height() }, "slow");
