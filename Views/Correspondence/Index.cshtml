@@ -34,15 +34,15 @@
 
     <div class="mess-input">
         <form id="sendMessage">                      
-            <input type="hidden" id="senderIdInput" value="@Model.Sender.Id" />
+            <input type="hidden" id="senderIdInput" value="@_userManager.GetUserId(User)" />
 
             @if (Model.Receiver.Id == _userManager.GetUserId(User))
             {
-                <input type="hidden" id="receiverIdInput" value="@_userManager.GetUserId(User)" />
+                <input type="hidden" id="receiverIdInput" value="@Model.SenderId" />
             }
             else
             {
-                <input type="hidden" id="receiverIdInput" value="@_userManager.Users.FirstOrDefault(u => u.Id == Model.ReceiverId).Id" />
+                <input type="hidden" id="receiverIdInput" value="@Model.ReceiverId" />
             }         
             
             <input type="text" id="messageInput" name="messageInput" placeholder="Write message" />

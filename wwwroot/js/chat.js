@@ -56,9 +56,9 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
     var sendingTime = day + "." + month + "." + year + " " + hours + ":" + minutes + ":" + seconds;
     var message = document.getElementById("messageInput").value;
-    var senderId = document.getElementById("senderIdInput").value;
+    var senderId = document.getElementById("senderIdInput").value
     var receiverId = document.getElementById("receiverIdInput").value;
-    connection.invoke("SendMessage", message, receiverId,senderId, sendingTime).catch(function (err) {
+    connection.invoke("SendMessage", message,senderId, receiverId, sendingTime).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
