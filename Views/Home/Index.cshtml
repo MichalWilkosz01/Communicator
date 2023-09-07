@@ -4,143 +4,129 @@
 @using Microsoft.AspNetCore.Identity;
 @inject UserManager<ApplicationUser> _userManager;
 @model HomePageViewModel
-<style>
-    .custom-delete-btn {
-        background-color: red;
-        color: white;
-    }
-</style>
-<div class="text-center">
-    <h1 class="display-4">Welcome @ViewData["UserName"]</h1>
-</div>
-@if (!User.Identity.IsAuthenticated)
-{
-    <h1 class="display-6">Please log in to write some messages.</h1>
 
-} else
-{
-    <div style="width: 100%;">
-        <div style="width: 65%; float: left; text-align:center;">
-            @if (Model.Correspondences.Count <= 0)
-            {
-                <h1 class="mb-4">You don't have any conversation.</h1>
-            }
-            else
-            {
-                <h1 class="mb-4">Your Conversations:</h1>
-                <div class="table-responsive">
-                    <table class="table custom-table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Nick</th>
-                                <th>Name</th>
-                                <th>Last Name</th>
-                                <th>Write Message</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var correspondence in Model.Correspondences)
-                            {
-                                @if (correspondence.ReceiverId == _userManager.GetUserId(User))
-                                {
-                                    <tr>
-                                        <td>@correspondence.Sender.Nick</td>
-                                        <td>@correspondence.Sender.Name</td>
-                                        <td>@correspondence.Sender.LastName</td>
-                                        <td>
-                                            <form method="post" asp-controller="Correspondence" asp-action="Index">
-                                                <input type="hidden" name="correspondentId" value="@correspondence.SenderId" />
-                                                <button type="submit" class="btn btn-success btn-sm">Write a Message</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td>@correspondence.Receiver.Nick</td>
-                                        <td>@correspondence.Receiver.Name</td>
-                                        <td>@correspondence.Receiver.LastName</td>
-                                        <td>
-                                            <form method="post" asp-controller="Correspondence" asp-action="Index">
-                                                <input type="hidden" name="correspondentId" value="@correspondence.ReceiverId" />
-                                                <button type="submit" class="btn btn-success btn-sm">Write a Message</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .custom-delete-btn {
+            background-color: red;
+            color: white;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .table-responsive {
+            margin-top: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        td {
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="text-center">
+            <h1 class="display-4">Welcome @ViewData["UserName"]</h1>
         </div>
-        <div style="float: left; text-align:center; width: 35%;">
-            <div class="container mt-4">
-                @if (Model.Friends.Count <= 0)
-                {
-                    <h1 class="display-6">Looks like You don't have any friends.</h1>
-                }
-                else
-                {
-                    <h1 class="mb-4">Your Friends:</h1>
-                    <div class="table-responsive">
-                        <table class="table custom-table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Nick</th>
-                                    <th>Name</th>
-                                    <th>Last Name</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var user in Model.Friends)
-                                {
-                                    <tr>
-                                        <td>@user.Nick</td>
-                                        <td>@user.Name</td>
-                                        <td>@user.LastName</td>
-                                        <td>
 
-                                            <form method="post" asp-controller="Home" asp-action="DeleteFriend">
-                                                <input type="hidden" name="friendId" value="@user.Id" />
-                                                <button type="submit" class="btn btn-primary btn-sm" style="background-color:red">Delete Friend</button>
-
-                                            </form>
-
-                                            <form method="post" asp-controller="Correspondence" asp-action="Index">
-                                                <input type="hidden" name="correspondentId" value="@user.Id" />
-                                                <button type="submit" class="btn btn-success btn-sm">Write a Message</button>
-                                            </form>
-
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-
-                      
-
-                    </div>
-                }
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="text-center">
+                <h1 class="display-6">Please log in to write some messages.</h1>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    @if (Model.Correspondences.Count <= 0)
+                    {
+                        <h1 class="text-center">You don't have any conversations.</h1>
+                    }
+                    else
+                    {
+                        <h1 class="text-center">Your Conversations:</h1>
+                        <div class="table-responsive">
+                            <table class="table custom-table">
+                                <!-- Tabela z wiadomościami -->
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Nick</th>
+                                        <th>Name</th>
+                                        <th>Last Name</th>
+                                        <th>Write Message</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var correspondence in Model.Correspondences)
+                                    {
+                                        <tr>
+                                            <td>@(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.Sender.Nick : correspondence.Receiver.Nick)</td>
+                                            <td>@(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.Sender.Name : correspondence.Receiver.Name)</td>
+                                            <td>@(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.Sender.LastName : correspondence.Receiver.LastName)</td>
+                                            <td>
+                                                <form method="post" asp-controller="Correspondence" asp-action="Index">
+                                                    <input type="hidden" name="correspondentId" value="@correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.SenderId : correspondence.ReceiverId" />
+                                                    <button type="submit" class="btn btn-success btn-sm">Write a Message</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-4">
+                    @if (Model.Friends.Count <= 0)
+                    {
+                        <h1 class="text-center">Looks like you don't have any friends.</h1>
+                    }
+                    else
+                    {
+                        <h1 class="text-center">Your Friends:</h1>
+                        <!-- Lista przyjaciół bez użycia tabeli -->
+                        <ul class="list-group">
+                            @foreach (var user in Model.Friends)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>@user.Nick</span>
+                                    <div>
+                                        <form method="post" asp-controller="Correspondence" asp-action="Index">
+                                            <input type="hidden" name="correspondentId" value="@user.Id" />
+                                            <button type="submit" class="btn btn-success btn-sm">Write a Message</button>
+                                        </form>
+                                        <form method="post" asp-controller="Home" asp-action="DeleteFriend">
+                                            <input type="hidden" name="friendId" value="@user.Id" />
+                                            <button type="submit" class="btn btn-primary btn-sm" style="background-color: red">Delete Friend</button>
+                                        </form>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        }
     </div>
 
 
-
-
-
-}
-
-      
-
-  
-
-    
-
- 
-
-
-
+</body>
+</html>
