@@ -32,7 +32,23 @@ namespace Communicator.Controllers
                 ViewData["UserName"] = $"{user.Name} {user.LastName}";
             }
             var userFriends = _context.Friendships.Where(x => x.UserId == id).Select(f => f.Friend).ToList();
-            var userCorrespondences = _context.Correspondences.Include(c => c.Receiver).Include(c => c.Sender).Include(c => c.Messages).Where(x => (x.SenderId == id || x.ReceiverId == id)).ToList();
+            var userCorrespondences = _context.Correspondences.Where(x => x.ReceiverId == id || x.SenderId == id).ToList();
+
+            foreach (var correspondence in userCorrespondences)
+            {
+                if (correspondence.SenderId == id)
+                {
+                    _context.Entry(correspondence)
+                        .Reference(c => c.Receiver)
+                        .Load();
+                }
+                else if (correspondence.ReceiverId == id)
+                {
+                    _context.Entry(correspondence)
+                        .Reference(c => c.Sender)
+                        .Load();
+                }
+            }
             HomePageViewModel viewModel = new HomePageViewModel
             {
                 Friends = userFriends,

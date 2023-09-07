@@ -13,7 +13,7 @@ namespace Communicator.Models
         public string SenderId { get; set; }
         public ApplicationUser Sender { get; set; } = null!;
         [ForeignKey("ReceiverId")]
-        public string ReceiverId { get; set; } 
+        public string ReceiverId { get; set; }
         public ApplicationUser Receiver { get; set; } = null!;
         public ICollection<Message>? Messages { get; set; } = new List<Message>();
     }
