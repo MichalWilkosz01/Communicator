@@ -27,7 +27,7 @@ namespace Communicator.Data
         .WithMany()
         .HasForeignKey(friendship => friendship.UserId)
         .OnDelete(DeleteBehavior.Restrict); 
-
+        
          
 
         }

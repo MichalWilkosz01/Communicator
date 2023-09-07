@@ -3,6 +3,7 @@ using Communicator.Models;
 using Communicator.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Drawing;
 
@@ -31,7 +32,14 @@ namespace Communicator.Controllers
                 ViewData["UserName"] = $"{user.Name} {user.LastName}";
             }
             var userFriends = _context.Friendships.Where(x => x.UserId == id).Select(f => f.Friend).ToList();
-            return View(userFriends);
+            var userCorrespondences = _context.Correspondences.Include(c => c.Receiver).Include(c => c.Sender).Include(c => c.Messages).Where(x => (x.SenderId == id || x.ReceiverId == id)).ToList();
+            HomePageViewModel viewModel = new HomePageViewModel
+            {
+                Friends = userFriends,
+                Correspondences = userCorrespondences
+            };
+           
+            return View(viewModel);
         }
 
         public IActionResult Privacy()
