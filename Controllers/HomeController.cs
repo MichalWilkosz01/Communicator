@@ -48,6 +48,7 @@ namespace Communicator.Controllers
                         .Reference(c => c.Sender)
                         .Load();
                 }
+                _context.Entry(correspondence).Collection(c => c.Messages).Load(); 
             }
             HomePageViewModel viewModel = new HomePageViewModel
             {
