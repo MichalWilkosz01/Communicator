@@ -83,13 +83,7 @@
                                             <td>@(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.Sender.LastName : correspondence.Receiver.LastName)</td>
                                             <td>
                                                 <form method="post" asp-controller="Correspondence" asp-action="Index">
-                                                    @if (correspondence.ReceiverId == _userManager.GetUserId(User))
-                                                    {
-                                                        <input type="hidden" name="correspondentId" value="@correspondence.SenderId"/>
-                                                    } else
-                                                    {
-                                                        <input type="hidden" name="correspondentId" value="@correspondence.ReceiverId" />
-                                                    }
+                                                    <input type="hidden" name="correspondentId" value=@(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.SenderId : correspondence.ReceiverId) />
                                                     <button type="submit" class="btn btn-success btn-sm">Write a Message</button>
                                                 </form>
                                             </td>
