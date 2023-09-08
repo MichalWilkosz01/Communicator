@@ -78,12 +78,36 @@
                                     @foreach (var correspondence in Model.Correspondences)
                                     {
                                         <tr>
-                                            <td>@(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.Sender.Nick : correspondence.Receiver.Nick)</td>
+
+                                            <td>
+                                                @(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.Sender.Nick : correspondence.Receiver.Nick)
+                                                <br>
+                                                @{
+                                                    var lastMessage = correspondence.Messages.LastOrDefault();
+                                                    if (lastMessage != null)
+                                                    {
+                                                        if (lastMessage.Content.Length > 20)
+                                                        {
+                                                            lastMessage.Content = lastMessage.Content.Substring(0, 20);
+                                                            lastMessage.Content += "...";
+                                                        }
+                                                        <p>@lastMessage.Sender.Name @lastMessage.Sender.LastName: @lastMessage.Content</p>
+                                                    }
+                                                }
+
+                                            </td>
                                             <td>@(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.Sender.Name : correspondence.Receiver.Name)</td>
                                             <td>@(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.Sender.LastName : correspondence.Receiver.LastName)</td>
                                             <td>
                                                 <form method="post" asp-controller="Correspondence" asp-action="Index">
-                                                    <input type="hidden" name="correspondentId" value=@(correspondence.ReceiverId == _userManager.GetUserId(User) ? correspondence.SenderId : correspondence.ReceiverId) />
+                                                    @if (correspondence.ReceiverId == _userManager.GetUserId(User))
+                                                    {
+                                                        <input type="hidden" name="correspondentId" value="@correspondence.SenderId" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="hidden" name="correspondentId" value="@correspondence.ReceiverId" />
+                                                    }
                                                     <button type="submit" class="btn btn-success btn-sm">Write a Message</button>
                                                 </form>
                                             </td>
