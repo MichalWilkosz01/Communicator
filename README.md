@@ -17,7 +17,7 @@ The project utilizes the following technologies:
 
 - ASP.NET Core: Framework for building web applications.
 - SignalR: A library for real-time communication.
-- HTML, CSS, JavaScript: Front-end technologies for building the user interface.
+- HTML, CSS, JavaScript: Technologies for building the user interface.
 - Entity Framework Core: Object-Relational Mapping (ORM) for database management.
 - SQL Server: Database storing user information and messages.
 
