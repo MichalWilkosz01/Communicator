@@ -37,5 +37,5 @@ To run the project on your computer, follow these steps:
 ## Authors
 
 - Kamil Surlas
-- Micha³ Wilkosz
+- Michal Wilkosz
 
