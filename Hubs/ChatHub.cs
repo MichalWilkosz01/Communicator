@@ -42,14 +42,14 @@ namespace Communicator.Hubs
             string groupName = _chatService.GetPrivateGroupName(senderId, receiverId);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);                
         }      
-        public async Task SendMessage(string messageContent,string senderId, string receiverId, string sendingTime)
+        public async Task SendMessage(string messageContent,string senderId, string receiverId)
         {           
             if (receiverId != null )
             {             
                 var sender = await _userManager.FindByIdAsync(senderId);
                 var senderName = $"{sender.Name} {sender.LastName}";
                 string groupName = _chatService.GetPrivateGroupName(senderId, receiverId);
-                await Clients.Group(groupName).SendAsync("ReceiveMessage", messageContent, sendingTime, senderName);
+                await Clients.Group(groupName).SendAsync("ReceiveMessage", messageContent, DateTime.Now.ToString(), senderName);
                
             }
         }
