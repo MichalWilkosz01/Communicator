@@ -2,14 +2,13 @@
 
 ## Project Description
 
-Communicator is a real-time web application built using ASP.NET that enables real-time communication between users. The project utilizes the SignalR library, allowing for instant message and notification exchange between users without the need for page refresh.
+Communicator is a real-time web application built using ASP.NET that enables real-time communication between users. The project utilizes the SignalR library, allowing for real-time private messages.
 
 ## Features
 
-- **Message Exchange**: Users can send and receive real-time text messages.
-- **Notifications**: The application notifies users of new messages and other activities using push notifications.
-- **User List**: Users can see a list of available users and start conversations with selected individuals.
-- **Private Conversations**: Users can have private conversations with one another.
+- **Private Message Exchange**: Users can send and receive real-time private text messages.
+- **User List**: Users can search another users and start conversations with selected individuals.
+- **Friends List**: Users can add other users to their friends list.
 - **Message History**: Users have access to the history of their conversations.
 
 ## Technologies
@@ -33,9 +32,7 @@ To run the project on your computer, follow these steps:
 5. Start the ASP.NET project.
 
 
-
 ## Authors
-
-- Kamil Surlas
-- Michal Wilkosz
+<a href="https://github.com/KamilSurlas">Kamil Surlas</a>  
+<a href="https://github.com/MichalWilkosz01">Michał Wilkosz</a>  
 
