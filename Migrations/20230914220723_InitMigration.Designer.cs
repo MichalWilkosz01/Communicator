@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Communicator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230829144725_First")]
-    partial class First
+    [Migration("20230914220723_InitMigration")]
+    partial class InitMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
