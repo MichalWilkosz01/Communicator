@@ -1,7 +1,5 @@
 # Communicator
 
-## Project Description
-
 Communicator is a real-time web application built using ASP.NET that enables real-time communication between users. The project utilizes the SignalR library, allowing for real-time private messages.
 
 ## Features
